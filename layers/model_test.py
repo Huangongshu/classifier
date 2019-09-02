@@ -47,7 +47,7 @@ def write_result(model_base_path,x,y,i,save_path):
     score=[np.where(x>=0.5,1,0) for x in y_pred]
     u=confusion_matrix(y,score)
     Accuracy=(u[0][0]+u[1][1])/(u[0][0]+u[0][1]+u[1][0]+u[1][1])
-    Sensitivity=u[1][1]/(u[1][1]+u[1][0])  #敏感度,tpr
+    Sensitivity=u[1][1]/(u[1][1]+u[1][0])  #敏感度,tpr,经过了测试，计算公式没有问题
     Specificity=u[0][0]/(u[0][1]+u[0][0])  #特异性，FPR
     f1_v=f1_score(y,score)
     r=recall_score(y,score)

@@ -6,6 +6,9 @@ from keras.metrics import binary_accuracy
 from keras.applications.resnet50 import ResNet50
 from keras.layers import Dense,GlobalAveragePooling2D,BatchNormalization,Dropout
 from keras.optimizers import Adam
+
+import sys
+sys.path.append('/home/longpeiji/utils')
 from user_datagenerator import User_Generator
 
 w1='/home/longpeiji/model_weights/resnet50_weights_tf_dim_ordering_tf_kernels.h5'

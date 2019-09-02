@@ -2,6 +2,10 @@
 #@author:huan
 
 from sklearn.metrics import auc,roc_curve,confusion_matrix,f1_score,recall_score
+
+import sys
+sys.path.append('/home/longpeiji/utils')
+
 from user_datagenerator import User_Generator
 import pandas as pd
 from glob import glob
@@ -70,7 +74,7 @@ type2_path='/home/longpeiji/image_assessment/validation/no_blur'
 data_gen=User_Generator(type1_path,type2_path)
 for x,y in data_gen.test_or_validation(2000):
     while 1:
-        try:
+        try:   
             l=len(glob(save_path+'/*.xlsx'))
             if l==0:
                 for p in glob(path+'/*.h5'): 
@@ -84,5 +88,5 @@ for x,y in data_gen.test_or_validation(2000):
                         write_result(p,x,y,num,save_path)
                         print(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))  
             
-        except OSError :
-            time.sleep(60)
+        except OSError :  #处理文件没有传完就去读的异常
+            time.sleep(60)  #给model.save 60s时间进行模型保存

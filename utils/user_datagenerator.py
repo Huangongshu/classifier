@@ -1,4 +1,4 @@
-﻿# -*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 #@author:huan 
 
 from dr_im_preprocessing import im_preprocess
@@ -43,33 +43,37 @@ class User_Generator():
         shuffle(self.l1)
 
 
-    def test_or_validation(self,batch_size):
-        '''
-        parameter:
-            batch_epoch:the parameter must be given,and its product with
-                  batch_size should be less than the total numbel of samples.
-        '''
-        data = self.l0+self.l1         
-    #        s=batch_epoch*batch_size
+    def test_or_validation(self,batch_size,type_data=None):
+
+        if type_data==None:
+            data = self.l0+self.l1    
+        elif int(type_data)==0:
+            data=self.l0
+        else:
+            data=self.l1
     #        assert s<=len(self.l0)
     #        assert s<=len(self.l1) 
-        x = []
-        y = []           
+          
         for start in range(0,len(data)-batch_size+1,batch_size):
+            x=[];y=[]
             a=slice(start,start+batch_size)
             for path,label in data[a]:
                 im = cv2.imread(path)
                 im = cv2.resize(im,(224,224))
                 b,g,r=cv2.split(im)
                 im=cv2.merge((r,g,b))     
-                im=(im/255-0.5)*2 #归一化                
+                im=(im/255.0-0.5)*2 #归一化                
                 x.append(im)
                 y.append(label)            
             yield x,y
 
     
     def train_generator(self,batch_size,batch_num):
-        
+        '''
+        parameter:
+            batch_num:the parameter must be given,and its product with
+                  batch_size should be less than the total numbel of samples.
+        '''        
         batch_s = batch_size//2
         b1=len(self.l0)//batch_s
         b2=len(self.l1)//batch_s
@@ -90,19 +94,40 @@ class User_Generator():
                 im = cv2.resize(im,(224,224))
                 b,g,r=cv2.split(im)
                 im=cv2.merge((r,g,b))
-                im=(im/255-0.5)*2 #归一化
+                im=(im/255.0-0.5)*2 #归一化
                 x.append(im)
                 y.append(label)
             i += 1
             yield (np.asarray(x,dtype=np.float32),np.asarray(y,dtype=np.float32)) #要是元组，而要变成数组，不能是列表
- 
+
+    def data_path(self,batch_size,type_data=None): 
+        
+        if type_data==None:
+            data = self.l0+self.l1    
+        elif int(type_data)==0:
+            data=self.l0
+        else:
+            data=self.l1         
+        for start in range(0,len(data)-batch_size+1,batch_size):
+            x=[];y=[]
+            a=slice(start,start+batch_size)
+            for path,label in data[a]:
+                im = cv2.imread(path)
+                im = cv2.resize(im,(224,224))
+                b,g,r=cv2.split(im)
+                im=cv2.merge((r,g,b))     
+                im=(im/255.0-0.5)*2 #归一化                
+                x.append(im)
+                y.append(path)            
+            yield x,y
+    
+    
 if __name__=='__main__':
     path1 = 'D:/huan/image_assessment/validation/blur'
     path2 = 'D:/huan/image_assessment/validation/no_blur'
 #    path1 = '/home/longpeiji/image_assessment/train/blur'
 #    path2 = '/home/longpeiji/image_assessment/train/no_blur'
     data_gene = User_Generator(path1,path2)
-    for x,y in data_gene.train_generator(100,10):
-        xs=x
-        break
-
+    xs=[]
+    for x,y in data_gene.data_path(100,0):
+        xs.append(x)

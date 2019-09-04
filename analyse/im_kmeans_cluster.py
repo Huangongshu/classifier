@@ -14,7 +14,7 @@ from shutil import *
 def return_id(label,y,*n):
     index_dict={}
     for i in n:
-        index0=np.where(label==0)
+        index0=np.where(label==i)
         y=np.asarray(y)
         type_path0=y[index0]        
         index_dict[int(i)]=type_path0        
@@ -47,7 +47,7 @@ for x,y in data_gene.data_path(1):
 
 
 #fe_map=np.squeeze(np.asarray(fe_map))
-km=KMeans(n_clusters=3)
+km=KMeans(n_clusters=3,init=random)
 label=km.fit_predict(fe_map)
 index_dict=return_id(label,im_path,0,1,2)
 #print(index_dict[0])

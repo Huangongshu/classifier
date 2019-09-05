@@ -2,7 +2,7 @@
 """
 Created on Mon Sep  2 14:58:48 2019
 
-@author: 27011
+@author: huan
 """
 
 from sklearn.cluster import *

@@ -8,6 +8,8 @@ from t_sne import T_SNE_data
 from keras.models import load_model,Model
 from user_datagenerator import *
 import matplotlib.pyplot as plt
+import sys
+sys.path.append('/home/longpeiji/utils')
 
 def select_k_value(data,init='random',start=2,end=20):
     scores=[]

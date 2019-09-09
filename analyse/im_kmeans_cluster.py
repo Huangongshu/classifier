@@ -10,6 +10,8 @@ from keras.models import load_model,Model
 from user_datagenerator import *
 import numpy as np
 from shutil import *
+import sys
+sys.path.append('/home/longpeiji/utils')
 
 def return_id(label,y,*n):
     index_dict={}

@@ -46,7 +46,8 @@ class User_Generator():
     def test_or_validation(self,batch_size,type_data=None):
 
         if type_data==None:
-            data = self.l0+self.l1    
+            data = self.l0+self.l1   
+            shuttle(data)
         elif int(type_data)==0:
             data=self.l0
         else:

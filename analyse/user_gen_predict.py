@@ -47,7 +47,7 @@ for x,y in data_gen.test_or_validation(im_num):
     Sensitivity+=Se
     Specificity+=Sp
     f1_v+=f
-    n+=0
+    n+=1
   
 i=1    
 pd.DataFrame(data={'Accuracy':[Accuracy/n],\

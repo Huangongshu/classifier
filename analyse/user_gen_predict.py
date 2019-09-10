@@ -2,6 +2,8 @@
 #@author:huan
 
 from sklearn.metrics import auc,roc_curve,confusion_matrix,f1_score,recall_score
+import sys
+sys.path.append('/home/longpeiji/utils')
 from user_datagenerator import User_Generator
 import pandas as pd
 import numpy as np

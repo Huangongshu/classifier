@@ -70,9 +70,10 @@ path='/home/longpeiji/keras_user_resnet/save_model'
 save_path='/home/longpeiji/keras_user_resnet/validation'
 type1_path='/home/longpeiji/image_assessment/validation/blur'
 type2_path='/home/longpeiji/image_assessment/validation/no_blur'
+im_num=2000
 
 data_gen=User_Generator(type1_path,type2_path)
-for x,y in data_gen.test_or_validation(2000):
+for x,y in data_gen.test_or_validation(im_num):
     while 1:
         try:   
             l=len(glob(save_path+'/*.xlsx'))

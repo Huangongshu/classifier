@@ -24,25 +24,41 @@ def write_result(model_base_path,x,y,i,save_path):
     Specificity=u[0][0]/(u[0][1]+u[0][0])  #特异性，FPR
     f1_v=f1_score(y,score)
     r=recall_score(y,score)
-    pd.DataFrame(data={'Accuracy':[Accuracy],\
-                       'auc':[auc_value],\
-                       'recall_score':[r],\
-                       'Sensitivity':[Sensitivity],\
-                       'Specificity':[Specificity],\
-                       'f1_v':[f1_v]})\
-                       .to_excel(save_path+'/'+'y_pred'+str(i)+'.xlsx')
+    return Accuracy,auc_value,r,Sensitivity,Specificity,f1_v
+
 
 print(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))
-path='C:/Users/27011/Desktop/mymodel_27.h5'
-save_path='D:/huan/new_fine_tuning'
-type1_path='D:/huan/new_test/blur'
-type2_path='D:/huan/new_test/no_blur'
-im_num=2000
+path='/home/huan/Desktop/mymodel_55.h5'
+save_path='/home/huan/Desktop'
+type1_path='/home/huan/huan/new_validation/blur'
+type2_path='/home/huan/huan/new_validation/no_blur'
+im_num=200
 
 data_gen=User_Generator(type1_path,type2_path)
+Accuracy=auc_value=r1=Sensitivity=Specificity=r=f1_v=n=0
+
+
 for x,y in data_gen.test_or_validation(im_num):     
-    write_result(path,x,y,1,save_path)
+    Ac,au,r,Se,Sp,f=write_result(path,x,y,1,save_path)
     print(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))            
+    Accuracy+=Ac
+    auc_value+=auc_value
+    r+=r1
+    Sensitivity+=Se
+    Specificity+=Sp
+    f1_v+=f
+    n+=0
+  
+i=1    
+pd.DataFrame(data={'Accuracy':[Accuracy/n],\
+                   'auc':[auc_value/n],\
+                   'recall_score':[r/n],\
+                   'Sensitivity':[Sensitivity/n],\
+                   'Specificity':[Specificity/n],\
+                   'f1_v':[f1_v/n]})\
+                   .to_excel(save_path+'/'+'y_pred'+str(i)+'.xlsx')        
+
+            
   
         
 

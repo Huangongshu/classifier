@@ -77,7 +77,7 @@ type2_path='/home/longpeiji/image_assessment/test/no_blur'
 im_num=4750
 
 data_gen=User_Generator(type1_path,type2_path)
-for x,y in data_gen.test_or_validation(2000):
+for x,y in data_gen.test_or_validation(im_num):
     while 1:
         try:
             l=len(glob(save_path+'/*.xlsx'))

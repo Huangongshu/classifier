@@ -16,11 +16,6 @@ from keras.activations import elu
 from keras.optimizers import Adam
 
 def crop_image_from_gray(img, tol=7):
-    """
-    Applies masks to the orignal image and 
-    returns the a preprocessed image with 
-    3 channels
-    """
     # If for some reason we only have two channels
     if img.ndim == 2:
         mask = img > tol
@@ -41,13 +36,6 @@ def crop_image_from_gray(img, tol=7):
         return img
 
 def preprocess_image(image, sigmaX=10):
-    """
-    The whole preprocessing pipeline:
-    1. Read in image/home/longpeiji/keras_efficientnet
-    2. Apply masks
-    3. Resize image to desired size
-    4. Add Gaussian noise to increase Robustness
-    """
     image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
     image = crop_image_from_gray(image)
     image = cv2.resize(image, (IMG_WIDTH, IMG_HEIGHT))
@@ -58,11 +46,6 @@ def append_ext(fn):
     return fn+".jpg"
 
 def build_model():
-    """
-    A custom implementation of EfficientNetB5
-    for the APTOS 2019 competition
-    (Regression)
-    """
     model = Sequential()
     model.add(effnet)
     model.add(GlobalAveragePooling2D())
@@ -137,9 +120,6 @@ for i in range(epoch):
     with open('/home/longpeiji/keras_efficientnet/train/loss_and_acc' + '_' + str(i) + '.txt','w') as f:
         s = str(history.history['loss'][-1])
         f.write(s)
-
-#    test_history=model.evaluate_generator(test_generator,steps=10,max_queue_size=10, workers=8,use_multiprocessing=True)
-#    print(test_history)
     with open('/home/longpeiji/keras_efficientnet/test/loss_and_acc'+'_'+str(i)+'.txt','w') as f:
         s=str(history.history['val_loss'][-1])
         f.write(s)

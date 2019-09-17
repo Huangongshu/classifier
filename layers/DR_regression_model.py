@@ -98,6 +98,15 @@ test_generator = train_datagen.flow_from_dataframe(train_df,
                                                   batch_size=BATCH_SIZE,
                                                   class_mode='other',
                                                   subset='validation')
+# pip install -U git+https://github.com/qubvel/efficientnet 下载安装模块，并在模块中使用模型，from efficientnet import EfficientNetB5
+#导入模型，这样用
+#effnet = efn.EfficientNetB5(weights='/home/ouzhuang/model_weights/efficientnet-b5_imagenet_1000_notop.h5',
+#                           include_top=False,
+#                           input_shape=(IMG_WIDTH, IMG_HEIGHT, CHANNELS))
+#import efficientnet.tfkeras
+#from tensorflow.keras.models import load_model
+#model = load_model('path/to/model.h5')
+#不然用load_model会找不到部分函数
 
 effnet = EfficientNetB5(weights=None,
                         include_top=False,

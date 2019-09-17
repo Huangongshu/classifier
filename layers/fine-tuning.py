@@ -28,11 +28,7 @@ for i in range(start,epoch,1):
 
     history=model.fit_generator(data_gene.train_generator(100,110),\
                                 steps_per_epoch=110,epochs=1,workers=16,use_multiprocessing=True,max_queue_size=110)        
-    test_pred_save_path='/home/longpeiji/keras_dr/save_model/user_test_y_pred'+'_'+str(i)+'.xlsx'
-    test_evaluate_save_path='/home/longpeiji/keras_dr/save_model/user_test_evaluate'+'_'+str(i)+'.txt'
-    test_data_dir='/home/longpeiji/image_assessment/test'  
-    
-    
+      
     with open('/home/longpeiji/keras_dr/train/loss_and_acc'+'_'+str(i)+'.txt','w') as f:
         s=str(history.history['loss'][-1])+'---'+str(history.history['binary_accuracy'][-1])
         f.write(s)

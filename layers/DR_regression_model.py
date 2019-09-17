@@ -106,6 +106,10 @@ effnet.load_weights('/home/longpeiji/model_weights/efficientnet-b5_imagenet_1000
 
 # Initialize model
 model = build_model()
+for i, layer in enumerate(effnet.layers):
+    if "batch_normalization" in layer.name:
+        effnet.layers[i] = GroupNormalization(groups=32, axis=-1, epsilon=0.00001)
+
 train_batch_stop_num=train_generator.samples//BATCH_SIZE
 test_batch_stop_num=test_generator.samples//BATCH_SIZE
 #batch_stop_num=4
